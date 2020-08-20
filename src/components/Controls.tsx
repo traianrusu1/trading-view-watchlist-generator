@@ -3,6 +3,8 @@
 import React, { ReactElement, useState, useRef } from 'react';
 import axios from 'axios';
 import styles from './Controls.module.css';
+import { BinanceSymbolData } from '../interfaces/BinanceSymbolData';
+import { KucoinSymbolData } from '../interfaces/KucoinSymbolData';
 
 function Controls(): ReactElement {
   const fileHrefConfig = 'data:text/plain;charset=utf-8,';
@@ -26,13 +28,27 @@ function Controls(): ReactElement {
   const getBinance = async (): Promise<void> => {
     const res = await axios.get('https://api.binance.com/api/v1/exchangeInfo');
     const btcSymbolCSV = res.data.symbols
-      .filter((item: any): boolean => item.quoteAsset === 'BTC' && item.status !== 'BREAK')
-      .sort((a: any, b: any) => (a.baseAsset > b.baseAsset ? 1 : -1))
-      .reduce((csvString: string, item: any) => {
+      .filter(
+        (item: BinanceSymbolData): boolean => item.quoteAsset === 'BTC' && item.status !== 'BREAK',
+      )
+      .sort((a: BinanceSymbolData, b: BinanceSymbolData) => (a.baseAsset > b.baseAsset ? 1 : -1))
+      .reduce((csvString: string, item: BinanceSymbolData) => {
         return `${csvString}BINANCE:${item.symbol},`;
       }, '');
 
     download('BinanceWatchlist.txt', btcSymbolCSV);
+  };
+
+  const getKucoin = async (): Promise<void> => {
+    const res = await axios.get(
+      'https://cors-anywhere.herokuapp.com/https://api.kucoin.com/api/v1/symbols?market=BTC',
+    );
+    // console.log(res);
+    const btcSymbolCSV = res.data.data.reduce((csvString: string, item: KucoinSymbolData) => {
+      return `${csvString}KUCOIN:${item.baseCurrency}${item.quoteCurrency},`;
+    }, '');
+
+    download('KucoinWatchlist.txt', btcSymbolCSV);
   };
 
   return (
@@ -43,10 +59,12 @@ function Controls(): ReactElement {
         download={fileName}
         ref={fileDownloadRef}
       />
-      <button type="button" className={styles.btn} onClick={getBinance}>
+      <button type="button" onClick={getBinance}>
         Binance
       </button>
-      <button type="button">Kucoin</button>
+      <button type="button" onClick={getKucoin}>
+        Kucoin
+      </button>
     </div>
   );
 }
