@@ -1,0 +1,14 @@
+.btnContainer {
+  display: flex;
+  /* width: 300px; */
+  width: 100%;
+  justify-content: center;
+}
+
+.btnContainer button {
+  margin-right: 1rem;
+}
+
+.downloadHiddenTag {
+  display: none;
+}
