@@ -1,19 +1,26 @@
-import React, { ReactElement } from 'react';
+/* eslint-disable jsx-a11y/anchor-has-content */
+/* eslint-disable jsx-a11y/control-has-associated-label */
+import React, { ReactElement, useState, useRef } from 'react';
 import axios from 'axios';
 import styles from './Controls.module.css';
 
 function Controls(): ReactElement {
-  const download = (filename: string, text: string): void => {
-    const element = document.createElement('a');
-    element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(text)}`);
-    element.setAttribute('download', filename);
+  const fileHrefConfig = 'data:text/plain;charset=utf-8,';
+  const [file, setFile] = useState('');
+  const [fileName, setFileName] = useState('watchlist');
+  const fileDownloadRef = useRef<HTMLAnchorElement>(null);
 
-    element.style.display = 'none';
-    document.body.appendChild(element);
+  const formatFile = (fileContent: string): string => {
+    return `${fileHrefConfig}${encodeURIComponent(fileContent)}`;
+  };
 
-    element.click();
-
-    document.body.removeChild(element);
+  const download = (myFileName: string, text: string): void => {
+    setFile(formatFile(text));
+    setFileName(myFileName);
+    if (fileDownloadRef != null) {
+      // eslint-disable-next-line no-unused-expressions
+      fileDownloadRef?.current?.click();
+    }
   };
 
   const getBinance = async (): Promise<void> => {
@@ -24,12 +31,18 @@ function Controls(): ReactElement {
       .reduce((csvString: string, item: any) => {
         return `${csvString}BINANCE:${item.symbol},`;
       }, '');
-    console.log(btcSymbolCSV);
+
     download('BinanceWatchlist.txt', btcSymbolCSV);
   };
 
   return (
     <div className={styles.btnContainer}>
+      <a
+        className={styles.downloadHiddenTag}
+        href={file}
+        download={fileName}
+        ref={fileDownloadRef}
+      />
       <button type="button" className={styles.btn} onClick={getBinance}>
         Binance
       </button>
