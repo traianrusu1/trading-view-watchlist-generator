@@ -1,10 +1,22 @@
-.App {
-  text-align: center;
+body {
+  background-color: #282c34;
+  color: #fff;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+button {
+  padding: 10px 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: aliceblue;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: cornflowerblue;
+}
+
+.App {
+  text-align: center;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -14,13 +26,6 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
   color: white;
 }
 
