@@ -40,9 +40,7 @@ function Controls(): ReactElement {
   };
 
   const getKucoin = async (): Promise<void> => {
-    const res = await axios.get(
-      'https://cors-anywhere.herokuapp.com/https://api.kucoin.com/api/v1/symbols?market=BTC',
-    );
+    const res = await axios.get('https://api.kucoin.com/api/v1/symbols?market=BTC');
     // console.log(res);
     const btcSymbolCSV = res.data.data.reduce((csvString: string, item: KucoinSymbolData) => {
       return `${csvString}KUCOIN:${item.baseCurrency}${item.quoteCurrency},`;
@@ -50,6 +48,18 @@ function Controls(): ReactElement {
 
     download('KucoinWatchlist.txt', btcSymbolCSV);
   };
+
+  // const getFTX = async (): Promise<void> => {
+  //   const res = await axios.get('https://ftx.com/api/markets');
+  //   console.log(res);
+  //   const ethSymbolCSV = res.data.tickers.reduce((csvString: string, item: KucoinSymbolData) => {
+  //     debugger;
+  //     return `${csvString}UNISWAP:${item.baseCurrency}${item.quoteCurrency},`;
+  //   }, '');
+  //   console.log(ethSymbolCSV);
+
+  //   // download('KucoinWatchlist.txt', ethSymbolCSV);
+  // };
 
   return (
     <div className={styles.btnContainer}>
@@ -65,6 +75,9 @@ function Controls(): ReactElement {
       <button type="button" onClick={getKucoin}>
         Kucoin
       </button>
+      {/* <button type="button" onClick={getFTX}>
+        FTX
+      </button> */}
     </div>
   );
 }
