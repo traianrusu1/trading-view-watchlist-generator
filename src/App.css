@@ -41,8 +41,25 @@ button:hover {
   color: #61dafb;
 }
 
-.divider {
-  border-top: 1px var(--color-naturalYellow) solid;
-  width: 60%;
+/* .divider {
+  border-top: 1px var(--color-lightGreen) solid;
+  width: 50%;
   margin: 60px auto;
+} */
+
+.divider {
+  position: relative;
+  width: 50%;
+  /* margin: 60px auto; */
+  margin-top: 60px;
+  margin-bottom: 60px;
+  height: 1px;
+  content: '';
+  position: relative;
+  top: 0;
+  left: 5%;
+  right: 5%;
+  width: 90%;
+  height: 1px;
+  background-image: linear-gradient(to right, transparent, var(--color-lightGreen), transparent);
 }
