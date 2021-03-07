@@ -12,8 +12,15 @@ interface Props {
 }
 
 function TrendingListItem({ coinData }: Props): ReactElement {
+  const handleItemClick = (): void => {
+    window.open(
+      `https://www.coingecko.com/en/coins/${coinData.trendingData.id}`,
+      `_newtab${Date.now()}`,
+    );
+  };
   return (
-    <article className={styles.item}>
+    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+    <article className={styles.item} onClick={handleItemClick} onKeyPress={handleItemClick}>
       <div className={styles.itemHeaderSection}>
         <img src={coinData.trendingData.thumb} alt={coinData.trendingData.name} />
         <span className={styles.itemSymbol}>{coinData.trendingData.symbol}</span>

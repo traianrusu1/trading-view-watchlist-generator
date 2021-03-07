@@ -10,14 +10,15 @@ button {
   border: none;
   background-color: var(--color-naturalYellow);
   color: var(--color-white);
-  transition: transform 0.2s;
+  transition: all 0.1s ease-out;
   cursor: pointer;
+  font-weight: 600;
 }
 
 button:hover {
   background-color: #f1b14ade;
   transform: scale(1.06, 1.06);
-  transition: transform 0.2s;
+  transition: all 0.1s ease-out;
 }
 
 .App {
