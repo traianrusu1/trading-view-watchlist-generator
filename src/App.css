@@ -13,6 +13,7 @@ button {
   transition: all 0.1s ease-out;
   cursor: pointer;
   font-weight: 600;
+  min-width: 90px;
 }
 
 button:hover {
