@@ -1,0 +1,16 @@
+.itemLine {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--color-mediumGreen);
+  padding: 6px 10px;
+}
+
+.label {
+  font-weight: 700;
+  margin-right: 10px;
+}
+
+.value {
+  font-weight: 600;
+  margin-right: 10px;
+}

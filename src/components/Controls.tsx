@@ -5,6 +5,7 @@ import axios from 'axios';
 import styles from './Controls.module.css';
 import { BinanceSymbolData } from '../interfaces/BinanceSymbolData';
 import { KucoinSymbolData } from '../interfaces/KucoinSymbolData';
+import config from '../config';
 
 function Controls(): ReactElement {
   const fileHrefConfig = 'data:text/plain;charset=utf-8,';
@@ -26,7 +27,7 @@ function Controls(): ReactElement {
   };
 
   const getBinance = async (): Promise<void> => {
-    const res = await axios.get('https://api.binance.com/api/v1/exchangeInfo');
+    const res = await axios.get(config.urls.binanceWatchlist);
     const btcSymbolCSV = res.data.symbols
       .filter(
         (item: BinanceSymbolData): boolean => item.quoteAsset === 'BTC' && item.status !== 'BREAK',
@@ -40,7 +41,7 @@ function Controls(): ReactElement {
   };
 
   const getKucoin = async (): Promise<void> => {
-    const res = await axios.get('https://api.kucoin.com/api/v1/symbols?market=BTC');
+    const res = await axios.get(config.urls.kucoinWatchlist);
     // console.log(res);
     const btcSymbolCSV = res.data.data.reduce((csvString: string, item: KucoinSymbolData) => {
       return `${csvString}KUCOIN:${item.baseCurrency}${item.quoteCurrency},`;
@@ -49,17 +50,22 @@ function Controls(): ReactElement {
     download('KucoinWatchlist.txt', btcSymbolCSV);
   };
 
-  // const getFTX = async (): Promise<void> => {
-  //   const res = await axios.get('https://ftx.com/api/markets');
-  //   console.log(res);
-  //   const ethSymbolCSV = res.data.tickers.reduce((csvString: string, item: KucoinSymbolData) => {
-  //     debugger;
-  //     return `${csvString}UNISWAP:${item.baseCurrency}${item.quoteCurrency},`;
-  //   }, '');
-  //   console.log(ethSymbolCSV);
+  const getFTX = async (): Promise<void> => {
+    const res = await axios.get(config.urls.ftxWatchlist);
+    const coinMap: any = {};
+    const ftxCSV = res.data.result
+      .filter((item: any) => item.type === 'spot')
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .reduce((csvString: string, item: any) => {
+        if (coinMap[item.baseCurrency]) {
+          return csvString;
+        }
+        coinMap[item.baseCurrency] = item.quoteCurrency;
+        return `${csvString}FTX:${item.baseCurrency}${item.quoteCurrency},`;
+      }, '');
 
-  //   // download('KucoinWatchlist.txt', ethSymbolCSV);
-  // };
+    download('FTXWatchlist.txt', ftxCSV);
+  };
 
   return (
     <div className={styles.btnContainer}>
@@ -75,9 +81,9 @@ function Controls(): ReactElement {
       <button type="button" onClick={getKucoin}>
         Kucoin
       </button>
-      {/* <button type="button" onClick={getFTX}>
+      <button type="button" onClick={getFTX}>
         FTX
-      </button> */}
+      </button>
     </div>
   );
 }

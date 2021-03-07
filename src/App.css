@@ -1,18 +1,23 @@
 body {
-  background-color: #282c34;
-  color: #fff;
+  background-color: var(--color-darkGreen);
+  color: var(--color-white);
+  margin: 20px;
 }
 
 button {
   padding: 10px 10px;
   border-radius: 5px;
   border: none;
-  background-color: aliceblue;
+  background-color: var(--color-naturalYellow);
+  color: var(--color-white);
+  transition: transform 0.2s;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: cornflowerblue;
+  background-color: #f1b14ade;
+  transform: scale(1.06, 1.06);
+  transition: transform 0.2s;
 }
 
 .App {
@@ -26,18 +31,17 @@ button:hover {
 }
 
 .App-header {
-  color: white;
+  /* color: var(--color-black); */
+  margin-bottom: 40px;
+  margin-top: 40px;
 }
 
 .App-link {
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.divider {
+  border-top: 1px var(--color-naturalYellow) solid;
+  width: 60%;
+  margin: 60px auto;
 }

@@ -1,0 +1,18 @@
+@import '../../cssVars.css';
+
+.trendingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 30px;
+}
+.mainHeading {
+  margin: 0 0 40px 0;
+}
+
+.listContainer {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}

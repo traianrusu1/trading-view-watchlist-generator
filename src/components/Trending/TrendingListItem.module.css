@@ -1,0 +1,33 @@
+.item {
+  min-width: 100px;
+  border: 1px solid var(--color-darkGreen);
+  background-color: var(--color-lightGreen);
+  color: var(--color-black);
+  border-radius: 5px;
+  padding: 10px 0;
+  margin: 5px;
+  font-size: 14px;
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.item:hover {
+  transform: scale(1.03, 1.03);
+  transition: transform 0.2s;
+}
+.itemHeaderSection {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0px;
+  font-weight: 600;
+  align-items: center;
+}
+.itemTitle {
+  margin-bottom: 15px;
+  margin-top: 2px;
+  font-size: smaller;
+}
+.itemSymbol {
+  margin-left: 10px;
+  font-size: large;
+}
