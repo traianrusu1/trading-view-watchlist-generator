@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/anchor-has-content */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { ReactElement } from 'react';
@@ -19,8 +21,7 @@ function TrendingListItem({ coinData }: Props): ReactElement {
     );
   };
   return (
-    // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-    <article className={styles.item} onClick={handleItemClick} onKeyPress={handleItemClick}>
+    <article className={styles.item} onClick={handleItemClick}>
       <div className={styles.itemHeaderSection}>
         <img src={coinData.trendingData.thumb} alt={coinData.trendingData.name} />
         <span className={styles.itemSymbol}>{coinData.trendingData.symbol}</span>
