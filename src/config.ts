@@ -3,9 +3,8 @@ const config = {
     coinGeckoTrending: 'https://api.coingecko.com/api/v3/search/trending',
     coinGeckoCoins: 'https://api.coingecko.com/api/v3/coins/{id}',
     binanceWatchlist: 'https://api.binance.com/api/v1/exchangeInfo',
-    kucoinWatchlist:
-      'https://cors-anywhere.herokuapp.com/https://api.kucoin.com/api/v1/symbols?market=BTC',
-    ftxWatchlist: 'https://cors-anywhere.herokuapp.com/https://ftx.com/api/markets',
+    kucoinWatchlist: 'https://api.kucoin.com/api/v1/symbols?market=BTC',
+    ftxWatchlist: 'https://ftx.com/api/markets',
   },
   theme: {
     colours: {
