@@ -1,5 +1,6 @@
 .btnContainer {
   display: flex;
+  flex-wrap: wrap;
   /* width: 300px; */
   width: 100%;
   justify-content: center;
@@ -7,6 +8,7 @@
 
 .btnContainer button {
   margin-right: 1rem;
+  margin-top: 1rem;
 }
 
 .downloadHiddenTag {
