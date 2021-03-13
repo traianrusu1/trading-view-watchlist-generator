@@ -41,19 +41,34 @@ function Controls(): ReactElement {
   };
 
   const getKucoin = async (): Promise<void> => {
-    const res = await axios.get(config.urls.kucoinWatchlist);
-    // console.log(res);
-    const btcSymbolCSV = res.data.data.reduce((csvString: string, item: KucoinSymbolData) => {
+    const res: any = await axios.get(config.urls.kucoinWatchlist);
+    const resJson = JSON.parse(res.data.contents);
+
+    const btcSymbolCSV = resJson.data.reduce((csvString: string, item: KucoinSymbolData) => {
       return `${csvString}KUCOIN:${item.baseCurrency}${item.quoteCurrency},`;
     }, '');
 
     download('KucoinWatchlist.txt', btcSymbolCSV);
   };
+  const getBittrex = async (): Promise<void> => {
+    const res = await axios.get(config.urls.bittrexWatchlist);
+    const resJson = JSON.parse(res.data.contents);
+    const btcSymbolCSV = resJson.result.reduce((csvString: string, item: any) => {
+      if (item.BaseCurrency !== 'BTC') {
+        return csvString;
+      }
+      return `${csvString}BITTREX:${item.MarketCurrency}${item.BaseCurrency},`;
+    }, '');
+
+    download('BittrexWatchlist.txt', btcSymbolCSV);
+  };
 
   const getFTX = async (): Promise<void> => {
     const res = await axios.get(config.urls.ftxWatchlist);
+    const resJson = JSON.parse(res.data.contents);
+
     const coinMap: any = {};
-    const ftxCSV = res.data.result
+    const ftxCSV = resJson.result
       .filter((item: any) => item.type === 'spot')
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .reduce((csvString: string, item: any) => {
@@ -83,6 +98,9 @@ function Controls(): ReactElement {
       </button>
       <button type="button" onClick={getFTX}>
         FTX
+      </button>
+      <button type="button" onClick={getBittrex}>
+        Bittrex
       </button>
     </div>
   );
